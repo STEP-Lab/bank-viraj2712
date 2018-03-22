@@ -12,7 +12,7 @@ public class AccountTest {
 
     @Before
     public void setUp() throws MinimumBalanceException, InvalidAccountNumberException {
-        account = new Account(new AccountNumber("1111-2222"),2000);
+        account = new Account("Viraj", new AccountNumber("1111-2222"),2000);
     }
 
     @Test
@@ -22,7 +22,7 @@ public class AccountTest {
 
     @Test(expected = MinimumBalanceException.class)
     public void checkMinimumBalance() throws MinimumBalanceException, InvalidAccountNumberException {
-        new Account(new AccountNumber("2222-1111"), 500);
+        new Account("Viraj", new AccountNumber("2222-1111"), 500);
     }
 
     @Test

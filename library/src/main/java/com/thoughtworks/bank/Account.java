@@ -1,11 +1,14 @@
 package com.thoughtworks.bank;
 
 public class Account {
+    private String accountHolder;
     private final AccountNumber accountNumber;
     private double balance;
 
-    public Account(AccountNumber accountNumber, double balance) throws MinimumBalanceException, InvalidAccountNumberException {
+    public Account(String accountHolder, AccountNumber accountNumber, double balance) throws MinimumBalanceException, InvalidAccountNumberException {
+        this.accountHolder = accountHolder;
         validateBalance(balance,"Insufficient balance to create an account");
+        this.accountHolder = accountHolder;
         this.accountNumber = accountNumber;
         this.balance = balance;
     }
