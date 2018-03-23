@@ -3,7 +3,7 @@ package com.thoughtworks.bank;
 import java.util.Date;
 import java.util.Objects;
 
-public class Transaction {
+public abstract class Transaction {
     protected Date date;
     protected final double balance;
     protected final String beneficiary;
