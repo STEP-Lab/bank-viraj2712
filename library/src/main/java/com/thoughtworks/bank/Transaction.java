@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public abstract class Transaction {
-    protected Date date;
+    protected final Date date;
     protected final double balance;
     protected final String beneficiary;
 
