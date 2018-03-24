@@ -6,12 +6,12 @@ import java.util.Objects;
 public abstract class Transaction {
     protected final Date date;
     protected final double balance;
-    protected final String beneficiary;
+    protected final String to;
 
-    public Transaction(Date date, double balance, String beneficiary) {
+    public Transaction(Date date, double balance, String to) {
         this.date = date;
         this.balance = balance;
-        this.beneficiary = beneficiary;
+        this.to = to;
     }
 
     public Date getDate() {
@@ -24,11 +24,11 @@ public abstract class Transaction {
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
         return Double.compare(that.balance, balance) == 0 &&
-                Objects.equals(beneficiary, that.beneficiary);
+                Objects.equals(to, that.to);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(balance, beneficiary);
+        return Objects.hash(balance, to);
     }
 }

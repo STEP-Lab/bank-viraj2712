@@ -3,8 +3,11 @@ package com.thoughtworks.bank;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Date;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
 
 public class AccountTest {
 
@@ -30,6 +33,13 @@ public class AccountTest {
         account.credit(1000);
         assertThat(account.getBalance(),is(3000.0));
     }
+
+    @Test
+    public void mustRecordCreditTransaction() throws MinimumBalanceException {
+        account.credit(1000);
+        assertThat(account.getAllTransactions(),hasItem(new CreditTransaction(new Date(),1000,"Viraj")));
+    }
+
 
     @Test(expected = MinimumBalanceException.class)
     public void validateDeclinedCredit() throws MinimumBalanceException {

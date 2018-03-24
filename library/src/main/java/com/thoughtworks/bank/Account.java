@@ -1,9 +1,13 @@
 package com.thoughtworks.bank;
 
+import java.util.ArrayList;
+
 public class Account {
     private String accountHolder;
     private final AccountNumber accountNumber;
     private double balance;
+    private Transactions transactions = new Transactions();
+    private ArrayList<Transaction> allTransactions = transactions.allTransactions;
 
     public Account(String accountHolder, AccountNumber accountNumber, double balance) throws MinimumBalanceException, InvalidAccountNumberException {
         this.accountHolder = accountHolder;
@@ -19,15 +23,24 @@ public class Account {
         }
     }
 
+    private boolean validateCredit(double amount) {
+        return amount > 0;
+    }
+
     public double getBalance() {
         return balance;
     }
 
+    public ArrayList<Transaction> getAllTransactions() {
+        return allTransactions;
+    }
+
     public void credit(double amount) throws MinimumBalanceException {
-        if (amount <= 0) {
+        if (!validateCredit(amount)) {
             throw new MinimumBalanceException("Invalid credit request");
         }
         balance += amount;
+        transactions.credit(amount,accountHolder);
     }
 
     public void debit(double amount) throws MinimumBalanceException {

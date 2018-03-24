@@ -14,4 +14,5 @@ public class TransactionTest {
         Date date = new Date();
         Transaction transaction = new CreditTransaction(date, 1000, "Omkar");
         assertThat(transaction.getDate(),is(date));
-    }}
+    }
+}
