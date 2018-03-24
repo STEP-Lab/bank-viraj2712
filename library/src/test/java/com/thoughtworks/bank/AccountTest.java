@@ -7,6 +7,7 @@ import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 
 public class AccountTest {
@@ -29,6 +30,13 @@ public class AccountTest {
     }
 
     @Test
+    public void mustRecordAllTransactions() throws MinimumBalanceException {
+        account.credit(1000);
+        account.debit(500);
+        assertThat(account.getAllTransactions(),hasItems(new CreditTransaction(1000,"Viraj"),new DebitTransaction(500,"Viraj")));
+    }
+
+    @Test
     public void validateCreditTransaction() throws MinimumBalanceException {
         account.credit(1000);
         assertThat(account.getBalance(),is(3000.0));
@@ -37,9 +45,8 @@ public class AccountTest {
     @Test
     public void mustRecordCreditTransaction() throws MinimumBalanceException {
         account.credit(1000);
-        assertThat(account.getAllTransactions(),hasItem(new CreditTransaction(new Date(),1000,"Viraj")));
+        assertThat(account.getAllTransactions(),hasItem(new CreditTransaction(1000,"Viraj")));
     }
-
 
     @Test(expected = MinimumBalanceException.class)
     public void validateDeclinedCredit() throws MinimumBalanceException {
@@ -50,6 +57,12 @@ public class AccountTest {
     public void validateDebitTransaction() throws MinimumBalanceException {
         account.debit(500);
         assertThat(account.getBalance(),is(1500.0));
+    }
+
+    @Test
+    public void mustRecordDebitTransaction() throws MinimumBalanceException {
+        account.debit(500);
+        assertThat(account.getAllTransactions(),hasItem(new DebitTransaction(500,"Viraj")));
     }
 
     @Test(expected = MinimumBalanceException.class)
