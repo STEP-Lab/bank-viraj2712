@@ -11,8 +11,6 @@ public class Account {
 
     public Account(String accountHolder, AccountNumber accountNumber, double balance) throws MinimumBalanceException, InvalidAccountNumberException {
         this.accountHolder = accountHolder;
-        validateBalance(balance,"Insufficient balance to create an account!");
-        this.accountHolder = accountHolder;
         this.accountNumber = accountNumber;
         this.balance = balance;
     }
@@ -21,6 +19,12 @@ public class Account {
         if (balance < 1000.0){
             throw new MinimumBalanceException(message);
         }
+    }
+
+    public static Account createAccount(String accountHolder, String accNumber, double balance) throws MinimumBalanceException, InvalidAccountNumberException {
+        validateBalance(balance,"Insufficient balance to create an account!");
+        AccountNumber accountNumber = new AccountNumber(accNumber);
+        return new Account(accountHolder, accountNumber, balance);
     }
 
     private boolean validateCredit(double amount) {
