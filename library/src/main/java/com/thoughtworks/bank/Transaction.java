@@ -24,11 +24,13 @@ public abstract class Transaction {
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
         return Double.compare(that.balance, balance) == 0 &&
+                Objects.equals(date.toString(), that.date.toString()) &&
                 Objects.equals(to, that.to);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(balance, to);
+
+        return Objects.hash(date.toString(), balance, to);
     }
 }
