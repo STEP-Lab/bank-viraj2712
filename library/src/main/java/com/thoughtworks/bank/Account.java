@@ -21,9 +21,8 @@ public class Account {
         }
     }
 
-    public static Account createAccount(String accountHolder, String accNumber, double balance) throws MinimumBalanceException, InvalidAccountNumberException {
+    public static Account createAccount(String accountHolder, AccountNumber accountNumber, double balance) throws MinimumBalanceException, InvalidAccountNumberException {
         validateBalance(balance,"Insufficient balance to create an account!");
-        AccountNumber accountNumber = new AccountNumber(accNumber);
         return new Account(accountHolder, accountNumber, balance);
     }
 
