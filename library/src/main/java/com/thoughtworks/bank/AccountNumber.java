@@ -11,4 +11,9 @@ public class AccountNumber {
             throw new InvalidAccountNumberException();
         }
     }
+
+    public static AccountNumber createAccountNumber(String accountNumber) throws InvalidAccountNumberException {
+        validateAccountNumber(accountNumber);
+        return new AccountNumber(accountNumber);
+    }
 }
