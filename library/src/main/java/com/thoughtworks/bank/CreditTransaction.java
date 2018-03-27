@@ -6,6 +6,7 @@ public class CreditTransaction extends Transaction {
 
     protected CreditTransaction(Date date, double amount, String to) {
         super(date,amount,to);
+        super.isCredit = true;
     }
 
     public CreditTransaction(double amount, String to) {

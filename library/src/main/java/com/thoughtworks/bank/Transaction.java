@@ -7,6 +7,8 @@ public abstract class Transaction {
     protected final Date date;
     protected final double amount;
     protected final String source;
+    protected boolean isCredit = false;
+    protected boolean isDebit = false;
 
     public Transaction(Date date, double amount, String source) {
         this.date = date;
@@ -16,6 +18,18 @@ public abstract class Transaction {
 
     public Date getDate() {
         return date;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public boolean isCreditTransaction() {
+        return isCredit;
+    }
+
+    public boolean isDebitTransaction() {
+        return isDebit;
     }
 
     @Override
@@ -40,9 +54,5 @@ public abstract class Transaction {
                 ", amount=" + amount +
                 ", source='" + source + '\'' +
                 '}';
-    }
-
-    public double getAmount() {
-        return amount;
     }
 }

@@ -21,24 +21,24 @@ public class TransactionsTest {
     @Test
     public void mustRecordCreditTransaction() {
         transactions.credit(1000,"Omkar");
-        CreditTransaction omkar = new CreditTransaction(new Date(), 1000, "Omkar");
-        assertThat(transactions.allTransactions,hasItem(omkar));
+        CreditTransaction omkarCredit = new CreditTransaction(new Date(), 1000, "Omkar");
+        assertThat(transactions.allTransactions,hasItem(omkarCredit));
     }
 
     @Test
     public void mustRecordDebitTransaction() {
         transactions.debit(1000,"Harshad");
-        DebitTransaction harshad = new DebitTransaction(new Date(), 1000, "Harshad");
-        assertThat(transactions.allTransactions,hasItem(harshad));
+        DebitTransaction harshadDebit = new DebitTransaction(new Date(), 1000, "Harshad");
+        assertThat(transactions.allTransactions,hasItem(harshadDebit));
     }
 
     @Test
     public void mustRecordMultipleTransactions() {
         transactions.credit(1000,"Omkar");
         transactions.debit(1000,"Harshad");
-        CreditTransaction omkar = new CreditTransaction(new Date(), 1000, "Omkar");
-        DebitTransaction harshad = new DebitTransaction(new Date(), 1000, "Harshad");
-        assertThat(transactions.allTransactions,hasItems(omkar,harshad));
+        CreditTransaction omkarCredit = new CreditTransaction(new Date(), 1000, "Omkar");
+        DebitTransaction harshadDebit = new DebitTransaction(new Date(), 1000, "Harshad");
+        assertThat(transactions.allTransactions,hasItems(omkarCredit,harshadDebit));
     }
 
     @Test
@@ -47,10 +47,10 @@ public class TransactionsTest {
         transactions.debit(1000,"Omkar");
         transactions.credit(1000,"Harshad");
         transactions.debit(2000,"Harshad");
-        CreditTransaction omkar = new CreditTransaction(1500.0, "Omkar");
-        DebitTransaction harshad = new DebitTransaction(2000.0, "Harshad");
+        CreditTransaction omkarCredit = new CreditTransaction(1500.0, "Omkar");
+        DebitTransaction harshadDebit = new DebitTransaction(2000.0, "Harshad");
         Transactions filteredTransactions = this.transactions.filterByAmountGreaterThan(1500);
-        assertThat(filteredTransactions.allTransactions,hasItems(omkar,harshad));
+        assertThat(filteredTransactions.allTransactions,hasItems(omkarCredit,harshadDebit));
     }
 
     @Test
@@ -59,9 +59,33 @@ public class TransactionsTest {
         transactions.debit(1000,"Omkar");
         transactions.credit(1000,"Harshad");
         transactions.debit(2000,"Harshad");
-        DebitTransaction omkar = new DebitTransaction(1000.0, "Omkar");
-        CreditTransaction harshad = new CreditTransaction(1000.0, "Harshad");
+        DebitTransaction omkarDebit = new DebitTransaction(1000.0, "Omkar");
+        CreditTransaction harshadCredit = new CreditTransaction(1000.0, "Harshad");
         Transactions filteredTransactions = this.transactions.filterByAmountBelowThan(1500);
-        assertThat(filteredTransactions.allTransactions,hasItems(omkar,harshad));
+        assertThat(filteredTransactions.allTransactions,hasItems(omkarDebit,harshadCredit));
+    }
+
+    @Test
+    public void getAllCreditTransactions() {
+        transactions.credit(1500,"Omkar");
+        transactions.debit(1000,"Omkar");
+        transactions.credit(1000,"Harshad");
+        transactions.debit(2000,"Harshad");
+        CreditTransaction omkarCredit = new CreditTransaction(1500.0, "Omkar");
+        CreditTransaction harshadCredit = new CreditTransaction(1000.0, "Harshad");
+        Transactions creditTransactions = this.transactions.getAllCreditTransactions();
+        assertThat(creditTransactions.allTransactions,hasItems(omkarCredit,harshadCredit));
+    }
+
+    @Test
+    public void getAllDebitTransactions() {
+        transactions.credit(1500,"Omkar");
+        transactions.debit(1000,"Omkar");
+        transactions.credit(1000,"Harshad");
+        transactions.debit(2000,"Harshad");
+        DebitTransaction omkarDebit = new DebitTransaction(1000.0, "Omkar");
+        DebitTransaction harshadDebit = new DebitTransaction(2000.0, "Harshad");
+        Transactions creditTransactions = this.transactions.getAllDebitTransactions();
+        assertThat(creditTransactions.allTransactions,hasItems(omkarDebit,harshadDebit));
     }
 }
