@@ -34,10 +34,10 @@ public class TransactionsTest {
         harshadCredit = new CreditTransaction(600.0, "Harshad");
         harshadDebit = new DebitTransaction(1400.0, "Harshad");
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
-        marchTwentyFive = dateFormatter.parse("25-03-1018");
-        marchTwentySix = dateFormatter.parse("26-03-1018");
-        marchTwentySeven = dateFormatter.parse("27-03-1018");
-        marchTwentyEight = dateFormatter.parse("28-03-1018");
+        marchTwentyFive = dateFormatter.parse("25-03-2018");
+        marchTwentySix = dateFormatter.parse("26-03-2018");
+        marchTwentySeven = dateFormatter.parse("27-03-2018");
+        marchTwentyEight = dateFormatter.parse("28-03-2018");
     }
 
     @Test
@@ -115,7 +115,7 @@ public class TransactionsTest {
         transactions.debit(marchTwentyEight,1400,"Harshad");
         DebitTransaction omkarDebit = new DebitTransaction(marchTwentySeven,800.0, "Omkar");
         CreditTransaction harshadCredit = new CreditTransaction(marchTwentySeven,600.0, "Harshad");
-        Transactions expected = transactions.getTransactionsHappenedOn(marchTwentySeven);
+        Transactions expected = transactions.getTransactionsHappenedOn("27-03-2018");
         assertThat(expected.allTransactions,hasItems(omkarDebit,harshadCredit));
     }
 
@@ -127,7 +127,7 @@ public class TransactionsTest {
         transactions.debit(marchTwentyEight,1400,"Harshad");
         CreditTransaction omkarCredit = new CreditTransaction(marchTwentyFive,1200.0, "Omkar");
         DebitTransaction omkarDebit = new DebitTransaction(marchTwentySix,800.0, "Omkar");
-        Transactions expected = transactions.getTransactionsHappenedBefore(marchTwentySeven);
+        Transactions expected = transactions.getTransactionsHappenedBefore("27-03-2018");
         assertThat(expected.allTransactions,hasItems(omkarCredit,omkarDebit));
     }
 
@@ -139,20 +139,21 @@ public class TransactionsTest {
         transactions.debit(marchTwentyEight,1400,"Harshad");
         CreditTransaction harshadCredit = new CreditTransaction(marchTwentySeven,600.0, "Harshad");
         DebitTransaction harshadDebit = new DebitTransaction(marchTwentyEight,1400.0, "Harshad");
-        Transactions expected = transactions.getTransactionsHappenedAfter(marchTwentySix);
+        Transactions expected = transactions.getTransactionsHappenedAfter("26-03-2018");
         assertThat(expected.allTransactions,hasItems(harshadCredit,harshadDebit));
     }
 
     @Test
-    public void shouldGiveTransactionsDuringGivenPeriod() throws ParseException {
+    public void shouldGiveTransactionsBetweenGivenPeriod() throws ParseException {
         transactions.credit(marchTwentyFive,1200,"Omkar");
         transactions.debit(marchTwentySix,800,"Omkar");
         transactions.credit(marchTwentySeven,600,"Harshad");
         transactions.debit(marchTwentyEight,1400,"Harshad");
         DebitTransaction omkarDebit = new DebitTransaction(marchTwentySix,800.0, "Omkar");
         CreditTransaction harshadCredit = new CreditTransaction(marchTwentySeven,600.0, "Harshad");
-        Transactions expected = transactions.getTransactionsHappenedDuring(marchTwentyFive,marchTwentyEight);
-        assertThat(expected.allTransactions,hasItems(omkarDebit,harshadCredit));
+        DebitTransaction harshadDebit = new DebitTransaction(marchTwentyEight,1400.0, "Harshad");
+        Transactions expected = transactions.getTransactionsHappenedBetween("26-03-2018","28-03-2018");
+        assertThat(expected.allTransactions,hasItems(omkarDebit,harshadCredit,harshadDebit));
     }
 
     @Test

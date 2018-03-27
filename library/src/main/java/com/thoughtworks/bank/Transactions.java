@@ -1,6 +1,8 @@
 package com.thoughtworks.bank;
 
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,9 +10,11 @@ public class Transactions {
 
     protected final ArrayList<Transaction> allTransactions;
     private double balance;
+    private SimpleDateFormat dateFormatter;
 
     public Transactions() {
         this.allTransactions = new ArrayList<>();
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
     }
 
     public ArrayList<Transaction> getAllTransactions() {
@@ -62,7 +66,7 @@ public class Transactions {
     public Transactions filterByAmountBelowThan(double amount) {
         Transactions filteredTransactions = new Transactions();
         for (Transaction transaction : allTransactions) {
-            if (transaction.getAmount() <= amount) {
+            if (transaction.getAmount() < amount) {
                 filteredTransactions.allTransactions.add(transaction);
             }
         }
@@ -89,10 +93,45 @@ public class Transactions {
         return debits;
     }
 
-    public Transactions getTransactionsHappenedOn(Date when) {
+    public Transactions getTransactionsHappenedOn(String when) throws ParseException {
+        Date transactionDate = dateFormatter.parse(when);
         Transactions filteredTransactions = new Transactions();
         for (Transaction transaction : allTransactions) {
-            if(transaction.getDate().equals(when)){
+            if(transaction.getDate().equals(transactionDate)){
+                filteredTransactions.allTransactions.add(transaction);
+            }
+        }
+        return filteredTransactions;
+    }
+
+    public Transactions getTransactionsHappenedBefore(String when) throws ParseException {
+        Date transactionDate = dateFormatter.parse(when);
+        Transactions filteredTransactions = new Transactions();
+        for (Transaction transaction : allTransactions) {
+            if(transaction.getDate().before(transactionDate)){
+                filteredTransactions.allTransactions.add(transaction);
+            }
+        }
+        return filteredTransactions;
+    }
+
+    public Transactions getTransactionsHappenedAfter(String when) throws ParseException {
+        Date transactionDate = dateFormatter.parse(when);
+        Transactions filteredTransactions = new Transactions();
+        for (Transaction transaction : allTransactions) {
+            if(transaction.getDate().after(transactionDate)){
+                filteredTransactions.allTransactions.add(transaction);
+            }
+        }
+        return filteredTransactions;
+    }
+
+    public Transactions getTransactionsHappenedBetween(String from, String to) throws ParseException {
+        Date initialDate = dateFormatter.parse(from);
+        Date finalDate = dateFormatter.parse(to);
+        Transactions filteredTransactions = new Transactions();
+        for (Transaction transaction : allTransactions) {
+            if(transaction.getDate().compareTo(initialDate) >= 0 && transaction.getDate().compareTo(finalDate) <= 0){
                 filteredTransactions.allTransactions.add(transaction);
             }
         }
@@ -103,35 +142,5 @@ public class Transactions {
         for (Transaction transaction : allTransactions) {
             printWriter.println(transaction.toString());
         }
-    }
-
-    public Transactions getTransactionsHappenedBefore(Date when) {
-        Transactions filteredTransactions = new Transactions();
-        for (Transaction transaction : allTransactions) {
-            if(transaction.getDate().before(when)){
-                filteredTransactions.allTransactions.add(transaction);
-            }
-        }
-        return filteredTransactions;
-    }
-
-    public Transactions getTransactionsHappenedAfter(Date when) {
-        Transactions filteredTransactions = new Transactions();
-        for (Transaction transaction : allTransactions) {
-            if(transaction.getDate().after(when)){
-                filteredTransactions.allTransactions.add(transaction);
-            }
-        }
-        return filteredTransactions;
-    }
-
-    public Transactions getTransactionsHappenedDuring(Date from, Date to) {
-        Transactions filteredTransactions = new Transactions();
-        for (Transaction transaction : allTransactions) {
-            if(transaction.getDate().after(from) && transaction.getDate().before(to)){
-                filteredTransactions.allTransactions.add(transaction);
-            }
-        }
-        return filteredTransactions;
     }
 }
