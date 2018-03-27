@@ -42,14 +42,26 @@ public class TransactionsTest {
     }
 
     @Test
-    public void filterTransactionsByAmount() {
+    public void filterTransactionsAboveAmount() {
         transactions.credit(1500,"Omkar");
         transactions.debit(1000,"Omkar");
-        transactions.credit(2000,"Harshad");
-        transactions.debit(1000,"Harshad");
+        transactions.credit(1000,"Harshad");
+        transactions.debit(2000,"Harshad");
         CreditTransaction omkar = new CreditTransaction(1500.0, "Omkar");
-        CreditTransaction harshad = new CreditTransaction(2000.0, "Harshad");
+        DebitTransaction harshad = new DebitTransaction(2000.0, "Harshad");
         Transactions filteredTransactions = this.transactions.filterByAmountGreaterThan(1500);
+        assertThat(filteredTransactions.allTransactions,hasItems(omkar,harshad));
+    }
+
+    @Test
+    public void filterTransactionsBelowAmount() {
+        transactions.credit(1500,"Omkar");
+        transactions.debit(1000,"Omkar");
+        transactions.credit(1000,"Harshad");
+        transactions.debit(2000,"Harshad");
+        DebitTransaction omkar = new DebitTransaction(1000.0, "Omkar");
+        CreditTransaction harshad = new CreditTransaction(1000.0, "Harshad");
+        Transactions filteredTransactions = this.transactions.filterByAmountBelowThan(1500);
         assertThat(filteredTransactions.allTransactions,hasItems(omkar,harshad));
     }
 }

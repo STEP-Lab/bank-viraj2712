@@ -27,4 +27,14 @@ public class Transactions {
         }
         return transactions;
     }
+
+    public Transactions filterByAmountBelowThan(double amount) {
+        Transactions transactions = new Transactions();
+        for (Transaction transaction : allTransactions) {
+            if (transaction.getAmount() <= amount) {
+                transactions.allTransactions.add(transaction);
+            }
+        }
+        return transactions;
+    }
 }
