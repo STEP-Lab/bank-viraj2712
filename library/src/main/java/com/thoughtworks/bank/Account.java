@@ -5,14 +5,13 @@ import java.util.ArrayList;
 public class Account {
     private String accountHolder;
     private final AccountNumber accountNumber;
-    private double balance;
-    private Transactions transactions = new Transactions();
-    private ArrayList<Transaction> allTransactions = transactions.allTransactions;
+    private Transactions transactions;
 
-    public Account(String accountHolder, AccountNumber accountNumber, double balance) throws MinimumBalanceException, InvalidAccountNumberException {
+    public Account(String accountHolder, AccountNumber accountNumber, double balance) throws MinimumBalanceException {
+        this.transactions = new Transactions();
+        credit(balance);
         this.accountHolder = accountHolder;
         this.accountNumber = accountNumber;
-        this.balance = balance;
     }
 
     private static void validateBalance(double balance, String message) throws MinimumBalanceException {
@@ -27,35 +26,33 @@ public class Account {
         return new Account(accountHolder, accountNumber, balance);
     }
 
-    private boolean validateCredit(double amount) {
-        return amount > 0;
+    private void validateCreditTransaction(double amount) throws MinimumBalanceException {
+        if (amount < 0) {
+            throw new MinimumBalanceException("Invalid credit request!");
+        }
     }
 
-    private boolean validateDebit(double balance, double amount) {
-        return balance - amount > 1000;
+    private void validateDebitTransaction(double amount) throws MinimumBalanceException {
+        if (getBalance() - amount < 1000) {
+            throw new MinimumBalanceException("Debit declined due to low balance!");
+        }
     }
 
     public double getBalance() {
-        return balance;
+        return transactions.getBalance();
     }
 
     public ArrayList<Transaction> getAllTransactions() {
-        return allTransactions;
+        return transactions.getAllTransactions();
     }
 
     public void credit(double amount) throws MinimumBalanceException {
-        if (!validateCredit(amount)) {
-            throw new MinimumBalanceException("Invalid credit request!");
-        }
-        balance += amount;
+        validateCreditTransaction(amount);
         transactions.credit(amount,accountHolder);
     }
 
     public void debit(double amount) throws MinimumBalanceException {
-        if (!validateDebit(balance,amount)) {
-            throw new MinimumBalanceException("Debit declined due to low balance!");
-        }
-        balance -= amount;
+        validateDebitTransaction(amount);
         transactions.debit(amount,accountHolder);
     }
 }

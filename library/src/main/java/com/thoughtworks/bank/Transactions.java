@@ -6,9 +6,14 @@ import java.util.ArrayList;
 public class Transactions {
 
     protected final ArrayList<Transaction> allTransactions;
+    private double balance;
 
     public Transactions() {
         this.allTransactions = new ArrayList<>();
+    }
+
+    public ArrayList<Transaction> getAllTransactions() {
+        return allTransactions;
     }
 
     public void credit(double amount, String to) {
@@ -17,6 +22,22 @@ public class Transactions {
 
     public void debit(double amount, String from) {
         this.allTransactions.add(new DebitTransaction(amount,from));
+    }
+
+    public void calculateBalance() {
+        this.balance = 0;
+        for (Transaction transaction : allTransactions) {
+            if (transaction instanceof CreditTransaction) {
+                this.balance += transaction.getAmount();
+            } else if (transaction instanceof DebitTransaction) {
+                this.balance -= transaction.getAmount();
+            }
+        }
+    }
+
+    public double getBalance() {
+        calculateBalance();
+        return this.balance;
     }
 
     public Transactions filterByAmountGreaterThan(double amount) {
