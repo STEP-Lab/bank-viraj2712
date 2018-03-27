@@ -5,12 +5,12 @@ import java.util.Objects;
 
 public abstract class Transaction {
     protected final Date date;
-    protected final double balance;
+    protected final double amount;
     protected final String source;
 
-    public Transaction(Date date, double balance, String source) {
+    public Transaction(Date date, double amount, String source) {
         this.date = date;
-        this.balance = balance;
+        this.amount = amount;
         this.source = source;
     }
 
@@ -23,22 +23,26 @@ public abstract class Transaction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return Double.compare(that.balance, balance) == 0 &&
+        return Double.compare(that.amount, amount) == 0 &&
                 Objects.equals(date.toString(), that.date.toString()) &&
                 Objects.equals(source, that.source);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(date.toString(), balance, source);
+        return Objects.hash(date.toString(), amount, source);
     }
 
     @Override
     public String toString() {
         return "Transaction{" +
                 "date=" + date +
-                ", balance=" + balance +
+                ", amount=" + amount +
                 ", source='" + source + '\'' +
                 '}';
+    }
+
+    public double getAmount() {
+        return amount;
     }
 }

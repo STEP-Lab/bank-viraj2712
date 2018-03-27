@@ -17,4 +17,14 @@ public class Transactions {
     public void debit(double amount, String from) {
         this.allTransactions.add(new DebitTransaction(amount,from));
     }
+
+    public Transactions filterByAmountGreaterThan(double amount) {
+        Transactions transactions = new Transactions();
+        for (Transaction transaction : allTransactions) {
+            if (transaction.getAmount() >= amount) {
+                transactions.allTransactions.add(transaction);
+            }
+        }
+        return transactions;
+    }
 }
