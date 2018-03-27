@@ -14,7 +14,7 @@ public class TransactionsTest {
     private Transactions transactions;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         transactions = new Transactions();
     }
 
