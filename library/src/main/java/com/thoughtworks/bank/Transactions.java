@@ -42,7 +42,7 @@ public class Transactions {
     public Transactions getAllCreditTransactions() {
         Transactions transactions = new Transactions();
         for (Transaction transaction : allTransactions) {
-            if (transaction.isCreditTransaction()) {
+            if (transaction instanceof CreditTransaction) {
                 transactions.allTransactions.add(transaction);
             }
         }
@@ -52,7 +52,7 @@ public class Transactions {
     public Transactions getAllDebitTransactions() {
         Transactions transactions = new Transactions();
         for (Transaction transaction : allTransactions) {
-            if (transaction.isDebitTransaction()) {
+            if (transaction instanceof DebitTransaction) {
                 transactions.allTransactions.add(transaction);
             }
         }

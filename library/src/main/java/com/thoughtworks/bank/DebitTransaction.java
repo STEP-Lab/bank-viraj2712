@@ -6,7 +6,6 @@ public class DebitTransaction extends Transaction {
 
     protected DebitTransaction(Date date, double amount, String from) {
         super(date,amount,from);
-        super.isDebit = true;
     }
 
     public DebitTransaction(double amount, String from) {
