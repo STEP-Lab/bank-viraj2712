@@ -1,11 +1,11 @@
 package com.thoughtworks.bank;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Transactions {
 
     protected final ArrayList<Transaction> allTransactions;
-    private Transactions allDebitTransactions;
 
     public Transactions() {
         this.allTransactions = new ArrayList<>();
@@ -57,5 +57,11 @@ public class Transactions {
             }
         }
         return transactions;
+    }
+
+    public void print(PrintWriter printWriter) {
+        for (Transaction transaction : allTransactions) {
+            printWriter.println(transaction.toString());
+        }
     }
 }
