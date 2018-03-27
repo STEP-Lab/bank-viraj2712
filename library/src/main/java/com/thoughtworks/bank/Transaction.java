@@ -45,4 +45,8 @@ public abstract class Transaction {
                 ", source='" + source + '\'' +
                 '}';
     }
+
+    public String toCSV() {
+        return String.format("%s,%s,%s",source,amount,date);
+    }
 }

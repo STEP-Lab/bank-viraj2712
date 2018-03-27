@@ -143,4 +143,11 @@ public class Transactions {
             printWriter.println(transaction.toString());
         }
     }
+
+    public void writeCSVTo(PrintWriter printWriter) {
+        String[] headers = {"Date","Amount","To","Balance"} ;
+        CSVWriter writer = new CSVWriter(printWriter,headers);
+        writer.write(allTransactions);
+        writer.close();
+    }
 }
