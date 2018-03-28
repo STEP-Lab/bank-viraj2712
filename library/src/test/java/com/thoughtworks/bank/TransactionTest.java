@@ -14,7 +14,7 @@ public class TransactionTest {
     private Date date;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         transaction = new CreditTransaction(new Date(), 1000, "Omkar", 1000);
         date = new Date();
     }

@@ -6,7 +6,6 @@ import org.junit.Test;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
@@ -15,20 +14,18 @@ import static org.junit.Assert.assertThat;
 public class CSVWriterTest {
     private ArrayList<String> expected;
     private PrintWriter printWriter;
-    private Date date;
     private String[] headers;
     private CSVWriter csvWriter;
 
     @Before
     public void setUp() throws Exception {
         expected = new ArrayList<>();
-        printWriter = new PrintWriter("transactions.txt", "UTF-8"){
+        printWriter = new PrintWriter("transactions.csv", "UTF-8"){
             @Override
             public void println(String x) {
                 expected.add(x);
             }
         };
-        date = new Date();
         headers = new String[] {"Source","Amount","Date","Balance","Type"};
         csvWriter = new CSVWriter(printWriter, headers);
     }

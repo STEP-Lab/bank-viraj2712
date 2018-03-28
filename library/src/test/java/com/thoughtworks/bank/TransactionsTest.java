@@ -163,7 +163,7 @@ public class TransactionsTest {
     @Test
     public void printTransactions() throws FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> expected = new ArrayList<>();
-        PrintWriter printWriter = new PrintWriter("foo", "utf-8") {
+        PrintWriter printWriter = new PrintWriter("transactions.txt", "utf-8") {
             @Override
             public void write(String x) {
                 expected.add(x);
@@ -182,7 +182,7 @@ public class TransactionsTest {
     public void writeToCsvFile() throws FileNotFoundException, UnsupportedEncodingException {
         String[] headers = {"Date","Amount","Source","Balance","Type"};
         ArrayList<String> expected = new ArrayList<>();
-        PrintWriter printWriter = new PrintWriter("transactions.txt", "UTF-8") {
+        PrintWriter printWriter = new PrintWriter("transactions.csv", "UTF-8") {
             @Override
             public void println(String x) {
                 expected.add(x);
