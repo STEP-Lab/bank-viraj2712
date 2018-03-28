@@ -7,11 +7,13 @@ public abstract class Transaction {
     protected final Date date;
     protected final double amount;
     protected final String source;
+    protected double currentBalance;
 
-    public Transaction(Date date, double amount, String source) {
+    public Transaction(Date date, double amount, String source, double currentBalance) {
         this.date = date;
         this.amount = amount;
         this.source = source;
+        this.currentBalance = currentBalance;
     }
 
     public Date getDate() {

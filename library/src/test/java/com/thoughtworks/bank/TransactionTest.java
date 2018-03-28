@@ -12,7 +12,7 @@ public class TransactionTest {
     @Test
     public void checkTransactionDate() {
         Date date = new Date();
-        Transaction transaction = new CreditTransaction(new Date(), 1000, "Omkar");
+        Transaction transaction = new CreditTransaction(new Date(), 1000, "Omkar", 1000);
         assertThat(transaction.getDate(),is(date));
     }
 }

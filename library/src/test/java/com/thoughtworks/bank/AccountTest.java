@@ -3,8 +3,6 @@ package com.thoughtworks.bank;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Date;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.CoreMatchers.hasItems;
@@ -33,7 +31,7 @@ public class AccountTest {
     public void mustRecordAllTransactions() throws MinimumBalanceException {
         account.credit(1000);
         account.debit(500);
-        assertThat(account.getAllTransactions(),hasItems(new CreditTransaction(1000,"Viraj"),new DebitTransaction(500,"Viraj")));
+        assertThat(account.getAllTransactions(),hasItems(new CreditTransaction(1000,"Viraj", account.getBalance()),new DebitTransaction(500,"Viraj", account.getBalance())));
     }
 
     @Test
@@ -45,7 +43,7 @@ public class AccountTest {
     @Test
     public void mustRecordCreditTransaction() throws MinimumBalanceException {
         account.credit(1000);
-        assertThat(account.getAllTransactions(),hasItem(new CreditTransaction(1000,"Viraj")));
+        assertThat(account.getAllTransactions(),hasItem(new CreditTransaction(1000,"Viraj", account.getBalance())));
     }
 
     @Test(expected = MinimumBalanceException.class)
@@ -62,7 +60,7 @@ public class AccountTest {
     @Test
     public void mustRecordDebitTransaction() throws MinimumBalanceException {
         account.debit(500);
-        assertThat(account.getAllTransactions(),hasItem(new DebitTransaction(500,"Viraj")));
+        assertThat(account.getAllTransactions(),hasItem(new DebitTransaction(500,"Viraj", account.getBalance())));
     }
 
     @Test(expected = MinimumBalanceException.class)

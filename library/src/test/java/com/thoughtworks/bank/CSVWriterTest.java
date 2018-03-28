@@ -35,23 +35,23 @@ public class CSVWriterTest {
 
     @Test
     public void shouldWritePassedTransactionsToCSVFile() {
-        csvWriter.write(new DebitTransaction(date,1000,"Harshad"));
+        csvWriter.write(new DebitTransaction(date,1000,"Harshad", 1000));
         csvWriter.close();
-        assertThat(expected,hasItems(String.join(",", Arrays.asList(headers)),new DebitTransaction(new Date(),1000.0,"Harshad").toCSV()));
+        assertThat(expected,hasItems(String.join(",", Arrays.asList(headers)),new DebitTransaction(new Date(),1000.0,"Harshad", 1000.0).toCSV()));
     }
 
     @Test
     public void shouldWriteCSVOfListToFile() {
         ArrayList<Transaction> transactions = new ArrayList<>();
-        transactions.add(new DebitTransaction(date, 120.0,"Viraj"));
-        transactions.add(new DebitTransaction(date, 1230.0,"Harshad"));
-        transactions.add(new DebitTransaction(date, 1220.0,"Omkar"));
+        transactions.add(new DebitTransaction(date, 120,"Viraj", 120));
+        transactions.add(new DebitTransaction(date, 1230,"Harshad", 1230));
+        transactions.add(new DebitTransaction(date, 1220,"Omkar", 1220));
         csvWriter.write(transactions);
         csvWriter.close();
         assertThat(expected.size(), is(4));
         assertThat(expected, hasItems(String.join(",", Arrays.asList(headers))
-                ,new DebitTransaction(new Date(), 120.0,"Viraj").toCSV()
-                ,new DebitTransaction(new Date(), 1230.0,"Harshad").toCSV()
-                ,new DebitTransaction(new Date(), 1220.0,"Omkar").toCSV()));
+                ,new DebitTransaction(new Date(), 120.0,"Viraj", 120.0).toCSV()
+                ,new DebitTransaction(new Date(), 1230.0,"Harshad", 1230.0).toCSV()
+                ,new DebitTransaction(new Date(), 1220.0,"Omkar", 1220.0).toCSV()));
     }
 }

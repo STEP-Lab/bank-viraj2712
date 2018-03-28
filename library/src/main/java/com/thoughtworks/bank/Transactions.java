@@ -21,20 +21,20 @@ public class Transactions {
         return allTransactions;
     }
 
-    public void credit(double amount, String to) {
-        this.allTransactions.add(new CreditTransaction(amount,to));
+    public void credit(double amount, String to, double currentBalance) {
+        this.allTransactions.add(new CreditTransaction(amount,to,currentBalance));
     }
 
-    protected void credit(Date date, double amount, String to) {
-        this.allTransactions.add(new CreditTransaction(date,amount,to));
+    protected void credit(Date date, double amount, String to, double currentBalance) {
+        this.allTransactions.add(new CreditTransaction(date,amount,to, currentBalance));
     }
 
-    public void debit(double amount, String from) {
-        this.allTransactions.add(new DebitTransaction(amount,from));
+    public void debit(double amount, String from, double currentBalance) {
+        this.allTransactions.add(new DebitTransaction(amount,from,currentBalance));
     }
 
-    protected void debit(Date date, double amount, String from) {
-        this.allTransactions.add(new DebitTransaction(date,amount,from));
+    protected void debit(Date date, double amount, String from, double currentBalance) {
+        this.allTransactions.add(new DebitTransaction(date,amount,from, currentBalance));
     }
 
     public void calculateBalance() {
