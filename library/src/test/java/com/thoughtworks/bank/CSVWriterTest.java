@@ -37,7 +37,7 @@ public class CSVWriterTest {
     public void shouldWritePassedTransactionsToCSVFile() {
         csvWriter.write(new DebitTransaction(date,1000,"Harshad", 1000));
         csvWriter.close();
-        assertThat(expected,hasItems(String.join(",", Arrays.asList(headers)),new DebitTransaction(new Date(),1000.0,"Harshad", 1000.0).toCSV()));
+        assertThat(expected,hasItems(String.join(",", Arrays.asList(headers)),new DebitTransaction(date,1000.0,"Harshad", 1000.0).toCSV()));
     }
 
     @Test
@@ -50,8 +50,8 @@ public class CSVWriterTest {
         csvWriter.close();
         assertThat(expected.size(), is(4));
         assertThat(expected, hasItems(String.join(",", Arrays.asList(headers))
-                ,new DebitTransaction(new Date(), 120.0,"Viraj", 120.0).toCSV()
-                ,new DebitTransaction(new Date(), 1230.0,"Harshad", 1230.0).toCSV()
-                ,new DebitTransaction(new Date(), 1220.0,"Omkar", 1220.0).toCSV()));
+                ,new DebitTransaction(date, 120.0,"Viraj", 120.0).toCSV()
+                ,new DebitTransaction(date, 1230.0,"Harshad", 1230.0).toCSV()
+                ,new DebitTransaction(date, 1220.0,"Omkar", 1220.0).toCSV()));
     }
 }

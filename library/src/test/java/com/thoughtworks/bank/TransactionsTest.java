@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.hasItems;
@@ -160,7 +161,7 @@ public class TransactionsTest {
     }
 
     @Test
-    public void shouldWriteTransactionsToGivenStream() throws FileNotFoundException, UnsupportedEncodingException {
+    public void printTransactions() throws FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> expected = new ArrayList<>();
         PrintWriter printWriter = new PrintWriter("foo", "utf-8") {
             @Override
@@ -175,5 +176,27 @@ public class TransactionsTest {
         transactions.print(printWriter);
         printWriter.close();
         assertThat(expected,hasItems(omkarCredit.toString(),harshadDebit.toString()));
+    }
+
+    @Test
+    public void writeToCsvFile() throws FileNotFoundException, UnsupportedEncodingException {
+        String[] headers = {"Date","Amount","To","Balance"};
+        ArrayList<String> expected = new ArrayList<>();
+        PrintWriter printWriter = new PrintWriter("transactions.txt", "UTF-8") {
+            @Override
+            public void println(String x) {
+                expected.add(x);
+            }
+        };
+        transactions.credit(1200,"Omkar");
+        transactions.debit(800,"Omkar");
+        transactions.credit(600,"Harshad");
+        transactions.debit(500,"Harshad");
+        transactions.writeCSVTo(printWriter);
+        assertThat(expected, hasItems(String.join(",", Arrays.asList(headers))
+                ,new CreditTransaction(1200.0,"Omkar", 0.0).toCSV()
+                ,new DebitTransaction(800.0,"Omkar", 1200.0).toCSV()
+                ,new CreditTransaction(600.0,"Harshad", 400.0).toCSV()
+                ,new DebitTransaction(500.0,"Harshad", 1000.0).toCSV()));
     }
 }
