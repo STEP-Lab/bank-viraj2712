@@ -30,10 +30,10 @@ public class TransactionsTest {
     @Before
     public void setUp() throws ParseException {
         transactions = new Transactions();
-        omkarCredit = new CreditTransaction(1200.0, "Omkar", 0.0);
-        omkarDebit = new DebitTransaction(800.0, "Omkar", 1200.0);
-        harshadCredit = new CreditTransaction(600.0, "Harshad", 400.0);
-        harshadDebit = new DebitTransaction(500.0, "Harshad", 1000.0);
+        omkarCredit = new CreditTransaction(1200d, "Omkar", 0d);
+        omkarDebit = new DebitTransaction(800d, "Omkar", 1200d);
+        harshadCredit = new CreditTransaction(600d, "Harshad", 400d);
+        harshadDebit = new DebitTransaction(500d, "Harshad", 1000d);
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
         marchTwentyFive = dateFormatter.parse("25-03-2018");
         marchTwentySix = dateFormatter.parse("26-03-2018");
@@ -50,7 +50,7 @@ public class TransactionsTest {
     @Test
     public void mustRecordDebitTransaction() {
         transactions.debit(500,"Harshad");
-        DebitTransaction harshadDebit1 = new DebitTransaction(500.0, "Harshad", 0.0);
+        DebitTransaction harshadDebit1 = new DebitTransaction(500d, "Harshad", 0d);
         assertThat(transactions.allTransactions,hasItem(harshadDebit1));
     }
 
@@ -58,8 +58,8 @@ public class TransactionsTest {
     public void mustRecordMultipleTransactions() {
         transactions.credit(1200,"Omkar");
         transactions.debit(500,"Harshad");
-        CreditTransaction omkarCredit1 = new CreditTransaction(1200.0, "Omkar", 0.0);
-        DebitTransaction harshadDebit1 = new DebitTransaction(500.0, "Harshad", 1200.0);
+        CreditTransaction omkarCredit1 = new CreditTransaction(1200d, "Omkar", 0d);
+        DebitTransaction harshadDebit1 = new DebitTransaction(500d, "Harshad", 1200d);
         assertThat(transactions.allTransactions,hasItems(omkarCredit1, harshadDebit1));
     }
 
@@ -68,7 +68,7 @@ public class TransactionsTest {
         transactions.credit(2000,"Omkar");
         transactions.credit(1600,"Omkar");
         transactions.debit(500,"Harshad");
-        assertThat(transactions.getBalance(),is(3100.0));
+        assertThat(transactions.getBalance(),is(3100d));
     }
 
     @Test
@@ -117,8 +117,8 @@ public class TransactionsTest {
         transactions.debit(marchTwentySeven,800,"Omkar");
         transactions.credit(marchTwentySeven,600,"Harshad");
         transactions.debit(marchTwentyEight,500,"Harshad");
-        DebitTransaction omkarDebit = new DebitTransaction(marchTwentySeven,800.0, "Omkar", 1200.0);
-        CreditTransaction harshadCredit = new CreditTransaction(marchTwentySeven,600.0, "Harshad", 400.0);
+        DebitTransaction omkarDebit = new DebitTransaction(marchTwentySeven,800d, "Omkar", 1200d);
+        CreditTransaction harshadCredit = new CreditTransaction(marchTwentySeven,600d, "Harshad", 400d);
         Transactions expected = transactions.getTransactionsHappenedOn("27-03-2018");
         assertThat(expected.allTransactions,hasItems(omkarDebit,harshadCredit));
     }
@@ -129,8 +129,8 @@ public class TransactionsTest {
         transactions.debit(marchTwentySix,800,"Omkar");
         transactions.credit(marchTwentySeven,600,"Harshad");
         transactions.debit(marchTwentyEight,500,"Harshad");
-        CreditTransaction omkarCredit = new CreditTransaction(marchTwentyFive,1200.0, "Omkar", 0.0);
-        DebitTransaction omkarDebit = new DebitTransaction(marchTwentySix,800.0, "Omkar", 1200.0);
+        CreditTransaction omkarCredit = new CreditTransaction(marchTwentyFive,1200d, "Omkar", 0d);
+        DebitTransaction omkarDebit = new DebitTransaction(marchTwentySix,800d, "Omkar", 1200d);
         Transactions expected = transactions.getTransactionsHappenedBefore("27-03-2018");
         assertThat(expected.allTransactions,hasItems(omkarCredit,omkarDebit));
     }
@@ -141,8 +141,8 @@ public class TransactionsTest {
         transactions.debit(marchTwentySeven,800,"Omkar");
         transactions.credit(marchTwentySeven,600,"Harshad");
         transactions.debit(marchTwentyEight,500,"Harshad");
-        CreditTransaction harshadCredit = new CreditTransaction(marchTwentySeven,600.0, "Harshad", 400.0);
-        DebitTransaction harshadDebit = new DebitTransaction(marchTwentyEight,500.0, "Harshad", 1000.0);
+        CreditTransaction harshadCredit = new CreditTransaction(marchTwentySeven,600d, "Harshad", 400d);
+        DebitTransaction harshadDebit = new DebitTransaction(marchTwentyEight,500d, "Harshad", 1000d);
         Transactions expected = transactions.getTransactionsHappenedAfter("26-03-2018");
         assertThat(expected.allTransactions,hasItems(harshadCredit,harshadDebit));
     }
@@ -153,9 +153,9 @@ public class TransactionsTest {
         transactions.debit(marchTwentySix,800,"Omkar");
         transactions.credit(marchTwentySeven,600,"Harshad");
         transactions.debit(marchTwentyEight,500,"Harshad");
-        DebitTransaction omkarDebit = new DebitTransaction(marchTwentySix,800.0, "Omkar", 1200.0);
-        CreditTransaction harshadCredit = new CreditTransaction(marchTwentySeven,600.0, "Harshad", 400.0);
-        DebitTransaction harshadDebit = new DebitTransaction(marchTwentyEight,500.0, "Harshad", 1000.0);
+        DebitTransaction omkarDebit = new DebitTransaction(marchTwentySix,800d, "Omkar", 1200d);
+        CreditTransaction harshadCredit = new CreditTransaction(marchTwentySeven,600d, "Harshad", 400d);
+        DebitTransaction harshadDebit = new DebitTransaction(marchTwentyEight,500d, "Harshad", 1000d);
         Transactions expected = transactions.getTransactionsHappenedBetween("26-03-2018","28-03-2018");
         assertThat(expected.allTransactions,hasItems(omkarDebit,harshadCredit,harshadDebit));
     }
@@ -171,8 +171,8 @@ public class TransactionsTest {
         };
         transactions.credit(1200,"Omkar");
         transactions.debit(500,"Harshad");
-        CreditTransaction omkarCredit = new CreditTransaction(1200.0, "Omkar", 0.0);
-        DebitTransaction harshadDebit = new DebitTransaction(500.0, "Harshad", 1200.0);
+        CreditTransaction omkarCredit = new CreditTransaction(1200d, "Omkar", 0d);
+        DebitTransaction harshadDebit = new DebitTransaction(500d, "Harshad", 1200d);
         transactions.print(printWriter);
         printWriter.close();
         assertThat(expected,hasItems(omkarCredit.toString(),harshadDebit.toString()));
@@ -180,7 +180,7 @@ public class TransactionsTest {
 
     @Test
     public void writeToCsvFile() throws FileNotFoundException, UnsupportedEncodingException {
-        String[] headers = {"Date","Amount","To","Balance"};
+        String[] headers = {"Date","Amount","Source","Balance","Type"};
         ArrayList<String> expected = new ArrayList<>();
         PrintWriter printWriter = new PrintWriter("transactions.txt", "UTF-8") {
             @Override
@@ -194,9 +194,9 @@ public class TransactionsTest {
         transactions.debit(500,"Harshad");
         transactions.writeCSVTo(printWriter);
         assertThat(expected, hasItems(String.join(",", Arrays.asList(headers))
-                ,new CreditTransaction(1200.0,"Omkar", 0.0).toCSV()
-                ,new DebitTransaction(800.0,"Omkar", 1200.0).toCSV()
-                ,new CreditTransaction(600.0,"Harshad", 400.0).toCSV()
-                ,new DebitTransaction(500.0,"Harshad", 1000.0).toCSV()));
+                ,new CreditTransaction(1200d,"Omkar", 0d).toCSV()
+                ,new DebitTransaction(800d,"Omkar", 1200d).toCSV()
+                ,new CreditTransaction(600d,"Harshad", 400d).toCSV()
+                ,new DebitTransaction(500d,"Harshad", 1000d).toCSV()));
     }
 }

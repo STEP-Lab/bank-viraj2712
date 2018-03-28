@@ -19,7 +19,7 @@ public class AccountTest {
 
     @Test
     public void checkBalance() {
-        assertThat(account.getBalance(),is(2000.0));
+        assertThat(account.getBalance(),is(2000d));
     }
 
     @Test(expected = MinimumBalanceException.class)
@@ -31,19 +31,19 @@ public class AccountTest {
     public void mustRecordAllTransactions() throws MinimumBalanceException {
         account.credit(1000);
         account.debit(500);
-        assertThat(account.getAllTransactions(),hasItems(new CreditTransaction(1000,"Viraj",2000.0),new DebitTransaction(500,"Viraj",3000.0)));
+        assertThat(account.getAllTransactions(),hasItems(new CreditTransaction(1000,"Viraj",2000d),new DebitTransaction(500,"Viraj",3000d)));
     }
 
     @Test
     public void validateCreditTransaction() throws MinimumBalanceException {
         account.credit(1000);
-        assertThat(account.getBalance(),is(3000.0));
+        assertThat(account.getBalance(),is(3000d));
     }
 
     @Test
     public void mustRecordCreditTransaction() throws MinimumBalanceException {
         account.credit(1000);
-        assertThat(account.getAllTransactions(),hasItem(new CreditTransaction(1000,"Viraj",2000.0)));
+        assertThat(account.getAllTransactions(),hasItem(new CreditTransaction(1000,"Viraj",2000d)));
     }
 
     @Test(expected = MinimumBalanceException.class)
@@ -54,13 +54,13 @@ public class AccountTest {
     @Test
     public void validateDebitTransaction() throws MinimumBalanceException {
         account.debit(500);
-        assertThat(account.getBalance(),is(1500.0));
+        assertThat(account.getBalance(),is(1500d));
     }
 
     @Test
     public void mustRecordDebitTransaction() throws MinimumBalanceException {
         account.debit(500);
-        assertThat(account.getAllTransactions(),hasItem(new DebitTransaction(500,"Viraj",2000.0)));
+        assertThat(account.getAllTransactions(),hasItem(new DebitTransaction(500,"Viraj",2000d)));
     }
 
     @Test(expected = MinimumBalanceException.class)

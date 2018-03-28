@@ -51,6 +51,6 @@ public abstract class Transaction {
     }
 
     public String toCSV() {
-        return String.format("%s,%s,%s,%s",source,amount,date,currentBalance);
+        return String.format("%s,%s,%s,%s,%s",source,amount,date,currentBalance,this.getClass().getSimpleName());
     }
 }
