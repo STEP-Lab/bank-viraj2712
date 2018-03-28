@@ -30,13 +30,14 @@ public abstract class Transaction {
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
         return Double.compare(that.amount, amount) == 0 &&
+                Double.compare(that.currentBalance, currentBalance) == 0 &&
                 Objects.equals(date.toString(), that.date.toString()) &&
                 Objects.equals(source, that.source);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(date.toString(), amount, source);
+        return Objects.hash(date.toString(), amount, source, currentBalance);
     }
 
     @Override
@@ -45,10 +46,11 @@ public abstract class Transaction {
                 "date=" + date +
                 ", amount=" + amount +
                 ", source='" + source + '\'' +
+                ", currentBalance=" + currentBalance +
                 '}';
     }
 
     public String toCSV() {
-        return String.format("%s,%s,%s",source,amount,date);
+        return String.format("%s,%s,%s,%s",source,amount,date,currentBalance);
     }
 }

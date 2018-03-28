@@ -48,11 +48,11 @@ public class Account {
 
     public void credit(double amount) throws MinimumBalanceException {
         validateCreditTransaction(amount);
-        transactions.credit(amount,accountHolder,getBalance());
+        transactions.credit(amount,accountHolder);
     }
 
     public void debit(double amount) throws MinimumBalanceException {
         validateDebitTransaction(amount);
-        transactions.debit(amount,accountHolder,getBalance());
+        transactions.debit(amount,accountHolder);
     }
 }

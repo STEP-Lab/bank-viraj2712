@@ -9,6 +9,6 @@ public class CreditTransaction extends Transaction {
     }
 
     public CreditTransaction(double amount, String to, double currentBalance) {
-        this(new Date(), amount, to,currentBalance);
+        this(new Date(), amount, to, currentBalance);
     }
 }
